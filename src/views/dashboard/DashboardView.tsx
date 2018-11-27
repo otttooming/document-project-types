@@ -1,13 +1,9 @@
 import * as React from "react";
-import Button from "../../components/Button/Button";
-import Container, {
-  ContainerVariant,
-} from "../../components/Container/Container";
-import Flex from "../../components/Grid/Flex/Flex";
-import Box from "../../components/Grid/Box/Box";
-import { IconType } from "../../components/Icon/Icon";
+import Container from "../../components/Container/Container";
 import { TypeObject } from "typedoc/dist/lib/serialization/browser";
 import { ProjectReflectionLvl2 } from "src/common/projectReflection";
+import { Button } from "antd";
+import Reflection from "../../components/Reflection/Reflection";
 
 export interface StateProps {
   activeComponentName: string | null;
@@ -48,15 +44,16 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
   };
 
   render() {
+    const { interfaceReflection } = this.props;
+
     return (
-      <Container variant={ContainerVariant.HERO}>
-        <Flex verticalCenter={true}>
-          <Box width={2 / 12}>
-            <Button icon={IconType.SEARCH} onClick={this.handleClick}>
-              Set
-            </Button>
-          </Box>
-        </Flex>
+      <Container>
+        {Array.isArray(interfaceReflection) &&
+          interfaceReflection.map((item, index) => (
+            <Reflection key={index} reflection={item} />
+          ))}
+
+        <Button onClick={this.handleClick}>Set</Button>
       </Container>
     );
   }
