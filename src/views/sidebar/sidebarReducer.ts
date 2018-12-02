@@ -3,6 +3,7 @@ import { setActiveViewRequest } from "./sidebarActions";
 
 export enum ViewName {
   Dashboard = "dashboard",
+  Search = "search",
 }
 
 class State {

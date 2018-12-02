@@ -3,6 +3,7 @@ import Container from "../../components/Container/Container";
 import { Button, Tabs } from "antd";
 import { ViewName } from "./sidebarReducer";
 import DashboardView from "../dashboard/dashboardWrapper";
+import SearchView from "../search/searchWrapper";
 
 const TabPane = Tabs.TabPane;
 
@@ -20,6 +21,7 @@ interface InternalState {}
 
 const VIEW = {
   [`${ViewName.Dashboard}`]: <DashboardView />,
+  [`${ViewName.Search}`]: <SearchView />,
 };
 
 class SidebarView extends React.Component<SidebarViewProps, InternalState> {
@@ -42,10 +44,10 @@ class SidebarView extends React.Component<SidebarViewProps, InternalState> {
       <Container>
         <Tabs tabPosition="left">
           <TabPane tab={this.renderTabTitle("Types")} key="1">
-            {VIEW[activeView]}
+            {VIEW[ViewName.Dashboard]}
           </TabPane>
           <TabPane tab={this.renderTabTitle("Search")} key="2">
-            {" "}
+            {VIEW[ViewName.Search]}
           </TabPane>
         </Tabs>
       </Container>
