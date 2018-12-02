@@ -7,6 +7,7 @@ import configureStore from "./store";
 import { ThemeProvider } from "./common/styled";
 import { theme } from "./common/styled/theme";
 import { specs } from "./common/specs";
+import SidebarView from "./views/sidebar/sidebarWrapper";
 
 injectGlobal`
   ${reset}
@@ -26,7 +27,7 @@ const App: React.SFC<AppProps> = () => {
   return (
     <Provider store={rootStore.store}>
       <ThemeProvider theme={theme}>
-        <DashboardView />
+        <SidebarView />
       </ThemeProvider>
     </Provider>
   );
