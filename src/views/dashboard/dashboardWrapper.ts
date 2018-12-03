@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { setActiveComponentName } from "./dashboardActions";
+import { setActiveComponentName } from "../../common/project/projectActions";
 import DashboardView, { DispatchProps, StateProps } from "./DashboardView";
 import { GlobalState } from "../../reducers";
 import {
@@ -7,7 +7,7 @@ import {
   selectExtendedTypes,
   selectTypeArgumentsIds,
   selectInterfaceReflection,
-} from "./dashboardSelectors";
+} from "../../common/project/projectSelectors";
 
 const mapStateToProps = (state: GlobalState): StateProps => {
   return {

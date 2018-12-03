@@ -11,7 +11,7 @@ export default function configureStore(
 
   const store = createStore(
     rootReducer,
-    { dashboardReducer: { reflection } },
+    { projectReducer: { reflection } },
     composeEnhancer(applyMiddleware(thunk))
   );
 

@@ -1,6 +1,6 @@
 import { GlobalState } from "../../reducers";
 import { createSelector } from "reselect";
-import { selectReflectionChildren } from "../dashboard/dashboardSelectors";
+import { selectReflectionChildren } from "../../common/project/projectSelectors";
 
 export const selectSearchQuery = (state: GlobalState) =>
   state.searchReducer.searchQuery;

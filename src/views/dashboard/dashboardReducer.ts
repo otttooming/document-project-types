@@ -1,25 +1,8 @@
 import { handleActions, Action } from "redux-actions";
-import { setActiveComponentNameRequest } from "./dashboardActions";
 import { ProjectReflection } from "../../common/projectReflection";
 
-class State {
-  activeComponentName: string | null = null;
-  reflection: ProjectReflection | null = null;
-}
+class State {}
 
-export default handleActions<State, any>(
-  {
-    [setActiveComponentNameRequest.toString()]: (
-      state,
-      action: Action<string | null>
-    ): State => {
-      return {
-        ...state,
-        activeComponentName: action.payload!,
-      };
-    },
-  },
-  new State()
-);
+export default handleActions<State, any>({}, new State());
 
 export { State as DashboardState };
