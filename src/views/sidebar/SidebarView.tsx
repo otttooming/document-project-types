@@ -25,8 +25,10 @@ const VIEW = {
 };
 
 class SidebarView extends React.Component<SidebarViewProps, InternalState> {
-  handleClick = () => {
-    this.props.setActiveView(ViewName.Dashboard);
+  handelOnChange = (value: ViewName) => {
+    const { setActiveView } = this.props;
+
+    setActiveView(value);
   };
 
   renderTabTitle = (title: string) => {
@@ -42,11 +44,15 @@ class SidebarView extends React.Component<SidebarViewProps, InternalState> {
 
     return (
       <Container>
-        <Tabs tabPosition="left">
-          <TabPane tab={this.renderTabTitle("Types")} key="1">
+        <Tabs
+          activeKey={activeView}
+          tabPosition="left"
+          onChange={this.handelOnChange}
+        >
+          <TabPane tab={this.renderTabTitle("Types")} key={ViewName.Dashboard}>
             {VIEW[ViewName.Dashboard]}
           </TabPane>
-          <TabPane tab={this.renderTabTitle("Search")} key="2">
+          <TabPane tab={this.renderTabTitle("Search")} key={ViewName.Search}>
             {VIEW[ViewName.Search]}
           </TabPane>
         </Tabs>

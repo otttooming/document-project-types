@@ -7,6 +7,8 @@ import {
   selectFoundReflections,
   selectActiveReflectionList,
 } from "./searchSelectors";
+import { setActiveComponentName } from "../../common/project/projectActions";
+import { setActiveView } from "../../common/routing/routingActions";
 
 const mapStateToProps = (state: GlobalState): StateProps => {
   return {
@@ -18,6 +20,8 @@ const mapStateToProps = (state: GlobalState): StateProps => {
 
 const mapDispatchToProps: DispatchProps = {
   findReflection,
+  setActiveComponentName,
+  setActiveView,
 };
 
 export default connect(

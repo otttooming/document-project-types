@@ -38,10 +38,6 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
     };
   }
 
-  handleClick = () => {
-    this.props.setActiveComponentName("constructor-type");
-  };
-
   render() {
     const { interfaceReflection } = this.props;
 
@@ -51,8 +47,6 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
           interfaceReflection.map((item, index) => (
             <Reflection key={index} reflection={item} />
           ))}
-
-        <Button onClick={this.handleClick}>Set</Button>
       </>
     );
   }

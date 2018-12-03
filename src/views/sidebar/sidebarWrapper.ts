@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
-import { setActiveView } from "./sidebarActions";
+import { setActiveView } from "../../common/routing/routingActions";
 import SidebarView, { DispatchProps, StateProps } from "./SidebarView";
 import { GlobalState } from "../../reducers";
-import { selectActiveView } from "./sidebarSelectors";
+import { selectActiveView } from "../../common/routing/routingSelectors";
 
 const mapStateToProps = (state: GlobalState): StateProps => {
   return {
