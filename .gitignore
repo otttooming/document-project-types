@@ -62,3 +62,6 @@ coverage/
 
 # WebStorm/IntelliJ
 .idea/
+
+# macOS
+.DS_Store
