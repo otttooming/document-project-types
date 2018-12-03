@@ -1,5 +1,4 @@
 import * as React from "react";
-import Container from "../../components/Container/Container";
 import { TypeObject } from "typedoc/dist/lib/serialization/browser";
 import { ProjectReflectionLvl2 } from "src/common/projectReflection";
 import { Button } from "antd";
@@ -47,14 +46,14 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
     const { interfaceReflection } = this.props;
 
     return (
-      <Container>
+      <>
         {Array.isArray(interfaceReflection) &&
           interfaceReflection.map((item, index) => (
             <Reflection key={index} reflection={item} />
           ))}
 
         <Button onClick={this.handleClick}>Set</Button>
-      </Container>
+      </>
     );
   }
 }
