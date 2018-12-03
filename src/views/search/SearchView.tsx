@@ -1,9 +1,12 @@
 import * as React from "react";
 import { SearchQuery } from "./searchReducer";
-import { Input } from "antd";
+import { Input, List } from "antd";
+import { ProjectReflectionLvl2 } from "src/common/projectReflection";
 
 export interface StateProps {
   searchQuery: SearchQuery | null;
+  foundReflections: number[] | null;
+  activeReflections: ProjectReflectionLvl2[] | null;
 }
 
 export interface DispatchProps {
@@ -34,9 +37,21 @@ class SearchView extends React.Component<SearchViewProps, InternalState> {
   };
 
   render() {
+    const { activeReflections } = this.props;
+
     return (
       <div>
         <Input.Search onChange={this.handleOnChange} />
+
+        <List
+          itemLayout="horizontal"
+          dataSource={!activeReflections ? [] : activeReflections}
+          renderItem={(item: ProjectReflectionLvl2) => (
+            <List.Item>
+              <List.Item.Meta title={item.name} description={item.kindString} />
+            </List.Item>
+          )}
+        />
       </div>
     );
   }
