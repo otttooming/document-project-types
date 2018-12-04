@@ -1,5 +1,8 @@
 import * as React from "react";
-import { ProjectReflectionLvl2 } from "src/common/projectReflection";
+import {
+  ProjectReflectionLvl2,
+  ProjectReflectionLvl3,
+} from "src/common/projectReflection";
 import { Table, Tag, Divider, Icon } from "antd";
 import { TypeObject } from "typedoc/dist/lib/serialization/browser";
 
@@ -12,13 +15,26 @@ export interface ReflectionProps {
 export interface ReflectionState {}
 
 class Reflection extends React.Component<ReflectionProps, ReflectionState> {
-  getType = (type: TypeObject | undefined) => {
-    if (!type) {
+  getType = (reflection: ProjectReflectionLvl3 | undefined) => {
+    if (!reflection || !reflection.type) {
       return undefined;
     }
 
+    const { type, flags } = reflection;
+
     if (Array.isArray(type.types)) {
-      return type.types.map(item => item.name).join(" | ");
+      return type.types
+        .reduce((acc, cur) => {
+          const isOptionalAndUndefined: boolean =
+            cur.name === "undefined" && Boolean(flags.isOptional);
+
+          if (isOptionalAndUndefined) {
+            return acc;
+          }
+
+          return [...acc, cur.name];
+        }, [])
+        .join(" | ");
     }
 
     if (type.type === "array" && type.elementType) {
@@ -37,8 +53,9 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
       return null;
     }
 
-    const data = children.map(({ name, type, flags }, index) => {
-      const typeDefinition = this.getType(type);
+    const data = children.map((item, index) => {
+      const { name, flags } = item;
+      const typeDefinition = this.getType(item);
 
       return {
         key: index,
