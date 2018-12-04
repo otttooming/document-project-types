@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ProjectReflectionLvl2 } from "src/common/projectReflection";
-import { Table, Tag, Divider } from "antd";
+import { Table, Tag, Divider, Icon } from "antd";
 import { TypeObject } from "typedoc/dist/lib/serialization/browser";
 
 const { Column } = Table;
@@ -33,12 +33,12 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
       return null;
     }
 
-    const data = children.map(({ name, type }, index) => {
+    const data = children.map(({ name, type, flags }, index) => {
       const typeDefinition = this.getType(type);
 
       return {
         key: index,
-        name,
+        tag: { name, flags },
         type: typeDefinition,
       };
     });
@@ -65,13 +65,19 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
         >
           <Column
             title="Props"
-            dataIndex="name"
-            key="name"
-            render={tag => (
-              <span>
-                <Tag color="blue">{tag}</Tag>
-              </span>
-            )}
+            dataIndex="tag"
+            key="tag"
+            render={({ name, flags }) => {
+              if (flags.isOptional) {
+                return <Tag>{name}</Tag>;
+              }
+
+              return (
+                <Tag color="#87d068">
+                  <Icon type="check" /> {name}
+                </Tag>
+              );
+            }}
             width={300}
           />
           <Column
