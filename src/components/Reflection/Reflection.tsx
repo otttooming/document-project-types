@@ -73,12 +73,16 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
             key="tag"
             render={({ name, flags }) => {
               if (flags.isOptional) {
-                return <Tag>{name}</Tag>;
+                return (
+                  <Tag>
+                    <code>{name}</code>
+                  </Tag>
+                );
               }
 
               return (
                 <Tag color="#87d068">
-                  <Icon type="check" /> {name}
+                  <Icon type="check" /> <code>{name}</code>
                 </Tag>
               );
             }}
