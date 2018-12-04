@@ -45,7 +45,7 @@ class SearchView extends React.Component<SearchViewProps, InternalState> {
     const { setActiveComponentName, setActiveView } = this.props;
 
     event.preventDefault();
-    setActiveComponentName("constructor-type");
+    setActiveComponentName(name);
     setActiveView(ViewName.Dashboard);
   };
 
