@@ -32,6 +32,13 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
             return acc;
           }
 
+          const isBooleanType: boolean =
+            cur.name === "true" || cur.name === "false";
+
+          if (isBooleanType) {
+            return [...new Set([...acc, "boolean"])];
+          }
+
           return [...acc, cur.name];
         }, [])
         .join(" | ");
