@@ -61,6 +61,7 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
           dataSource={data}
           pagination={false}
           style={{ marginBottom: 32 }}
+          size="middle"
         >
           <Column
             title="Props"
