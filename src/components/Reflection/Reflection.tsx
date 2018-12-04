@@ -78,7 +78,9 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
             title="Description"
             dataIndex="type"
             key="type"
-            render={description => <code>{description}</code>}
+            render={description => (
+              <code style={{ fontSize: 12 }}>{description}</code>
+            )}
           />
         </Table>
       </div>
