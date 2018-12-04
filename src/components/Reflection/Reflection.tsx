@@ -21,6 +21,10 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
       return type.types.map(item => item.name).join(" | ");
     }
 
+    if (type.type === "array" && type.elementType) {
+      return <>{type.elementType.name}[]</>;
+    }
+
     return type.name;
   };
 
