@@ -13,7 +13,7 @@ export interface ReflectionState {}
 
 class Reflection extends React.Component<ReflectionProps, ReflectionState> {
   getType = (type: TypeObject | undefined) => {
-    if (!type) {
+    if (!type || !Array.isArray(type.types)) {
       return undefined;
     }
 
@@ -21,15 +21,17 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
       return type.name;
     }
 
-    return (
-      Array.isArray(type.types) && type.types.map(item => item.name).join(" | ")
-    );
+    return type.types.map(item => item.name).join(" | ");
   };
 
   render() {
     const {
       reflection: { children, name, kindString },
     } = this.props;
+
+    if (!children) {
+      return null;
+    }
 
     const data = children.map(({ name, type }, index) => {
       const typeDefinition = this.getType(type);
