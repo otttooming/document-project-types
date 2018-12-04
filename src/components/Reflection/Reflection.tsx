@@ -13,15 +13,15 @@ export interface ReflectionState {}
 
 class Reflection extends React.Component<ReflectionProps, ReflectionState> {
   getType = (type: TypeObject | undefined) => {
-    if (!type || !Array.isArray(type.types)) {
+    if (!type) {
       return undefined;
     }
 
-    if (type.name) {
-      return type.name;
+    if (Array.isArray(type.types)) {
+      return type.types.map(item => item.name).join(" | ");
     }
 
-    return type.types.map(item => item.name).join(" | ");
+    return type.name;
   };
 
   render() {
