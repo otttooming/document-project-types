@@ -7,11 +7,13 @@ import {
   selectExtendedTypes,
   selectTypeArgumentsIds,
   selectInterfaceReflection,
+  selectActiveComponent,
 } from "../../common/project/projectSelectors";
 
 const mapStateToProps = (state: GlobalState): StateProps => {
   return {
     activeComponentName: selectActiveComponentName(state),
+    activeComponent: selectActiveComponent(state),
     extendedTypes: selectExtendedTypes(state),
     typeArgumentsIds: selectTypeArgumentsIds(state),
     interfaceReflection: selectInterfaceReflection(state),

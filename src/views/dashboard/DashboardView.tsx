@@ -6,6 +6,7 @@ import Reflection from "../../components/Reflection/Reflection";
 
 export interface StateProps {
   activeComponentName: string | null;
+  activeComponent: ProjectReflectionLvl2 | null;
   extendedTypes: TypeObject[] | null;
   typeArgumentsIds: number[] | null;
   interfaceReflection: ProjectReflectionLvl2[] | null;
@@ -39,10 +40,17 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
   }
 
   render() {
-    const { interfaceReflection } = this.props;
+    const { interfaceReflection, activeComponent } = this.props;
+
+    if (!activeComponent) {
+      return null;
+    }
+
+    const { name } = activeComponent;
 
     return (
       <>
+        <h1 style={{ marginBottom: 32, fontSize: "2em" }}>{name}</h1>
         {Array.isArray(interfaceReflection) &&
           interfaceReflection.map((item, index) => (
             <Reflection key={index} reflection={item} />
