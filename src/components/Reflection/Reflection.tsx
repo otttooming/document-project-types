@@ -4,7 +4,12 @@ import {
   ProjectReflectionLvl3,
 } from "src/common/projectReflection";
 import { Table, Tag, Divider, Icon } from "antd";
-import { TypeObject } from "typedoc/dist/lib/serialization/browser";
+import {
+  TypeObject,
+  DeclarationReflectionContainer,
+  SignatureReflectionObject,
+  ReflectionObject,
+} from "typedoc/dist/lib/serialization/browser";
 
 const { Column } = Table;
 
@@ -15,6 +20,31 @@ export interface ReflectionProps {
 export interface ReflectionState {}
 
 class Reflection extends React.Component<ReflectionProps, ReflectionState> {
+  getIsReflectionType = (type: TypeObject | undefined): boolean => {
+    if (!type || type.type !== "reflection") {
+      return false;
+    }
+
+    return true;
+  };
+
+  getReflection = (
+    declaration:
+      | ReflectionObject &
+          DeclarationReflectionContainer<SignatureReflectionObject>
+      | undefined
+  ) => {
+    if (!declaration || !declaration.signatures) {
+      return [];
+    }
+
+    return declaration.signatures.map(({ parameters = [], type }) => {
+      const args = parameters.map(item => `${item.name}: ${item.type.value}`);
+
+      return `(${args.join(", ")}) => ${!!type && type.name}`;
+    });
+  };
+
   getType = (reflection: ProjectReflectionLvl3 | undefined) => {
     if (!reflection || !reflection.type) {
       return undefined;
@@ -39,6 +69,10 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
             return [...new Set([...acc, "boolean"])];
           }
 
+          if (this.getIsReflectionType(cur)) {
+            return [...acc, ...this.getReflection(cur.declaration)];
+          }
+
           return [...acc, cur.name];
         }, [])
         .join(" | ");
@@ -46,6 +80,10 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
 
     if (type.type === "array" && type.elementType) {
       return <>{type.elementType.name}[]</>;
+    }
+
+    if (this.getIsReflectionType(type)) {
+      return this.getReflection(type.declaration).join(" | ");
     }
 
     return type.name;
