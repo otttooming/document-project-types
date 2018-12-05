@@ -158,14 +158,18 @@ export const selectInterfaceIds = createSelector(
   selectFunctionParametersIds,
   selectTypeArgumentsIds,
   selectKindStringAsInterfaceId,
-  (functionParametersIds, typeArgumentsIds, kindStringAsInterfaceId) => {
-    const ids: number[] = []
-      .concat(
-        functionParametersIds as [],
-        typeArgumentsIds as [],
-        kindStringAsInterfaceId as any
-      )
-      .filter(Number);
+  (...args) => {
+    const ids: number[] = args.reduce<number[]>((acc, cur) => {
+      if (Array.isArray(cur)) {
+        return [...acc, ...cur];
+      }
+
+      if (typeof cur === "number") {
+        return [...acc, cur];
+      }
+
+      return acc;
+    }, []);
 
     if (!ids.length) {
       return null;
