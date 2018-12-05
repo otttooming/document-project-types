@@ -140,12 +140,31 @@ export const selectTypeArgumentsIds = createSelector(
   }
 );
 
+/**
+ * If we are selecting Interface for introspection we get it's ID.
+ */
+export const selectKindStringAsInterfaceId = createSelector(
+  selectActiveComponent,
+  activeComponent => {
+    if (!activeComponent || activeComponent.kindString !== "Interface") {
+      return null;
+    }
+
+    return activeComponent.id;
+  }
+);
+
 export const selectInterfaceIds = createSelector(
   selectFunctionParametersIds,
   selectTypeArgumentsIds,
-  (functionParametersIds, typeArgumentsIds) => {
+  selectKindStringAsInterfaceId,
+  (functionParametersIds, typeArgumentsIds, kindStringAsInterfaceId) => {
     const ids: number[] = []
-      .concat(functionParametersIds as [], typeArgumentsIds as [])
+      .concat(
+        functionParametersIds as [],
+        typeArgumentsIds as [],
+        kindStringAsInterfaceId as any
+      )
       .filter(Number);
 
     if (!ids.length) {
