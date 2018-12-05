@@ -10,6 +10,7 @@ import {
   SignatureReflectionObject,
   ReflectionObject,
 } from "typedoc/dist/lib/serialization/browser";
+import CopyToClipboard from "../../components/CopyToClipboard/CopyToClipboard";
 
 const { Column } = Table;
 
@@ -136,16 +137,20 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
             render={({ name, flags }) => {
               if (flags.isOptional) {
                 return (
-                  <Tag>
-                    <code>{name}</code>
-                  </Tag>
+                  <CopyToClipboard text={name}>
+                    <Tag>
+                      <code>{name}</code>
+                    </Tag>
+                  </CopyToClipboard>
                 );
               }
 
               return (
-                <Tag color="#87d068">
-                  <Icon type="check" /> <code>{name}</code>
-                </Tag>
+                <CopyToClipboard text={name}>
+                  <Tag color="#87d068">
+                    <Icon type="check" /> <code>{name}</code>
+                  </Tag>
+                </CopyToClipboard>
               );
             }}
             width={300}
