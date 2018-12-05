@@ -46,6 +46,55 @@ export const selectExtendedTypes = createSelector(
   }
 );
 
+/**
+ * "kindString": "Function",
+ */
+export const selectFunctionSignatures = createSelector(
+  selectActiveComponent,
+  activeComponent => {
+    if (!activeComponent || !activeComponent.signatures) {
+      return null;
+    }
+    return activeComponent.signatures;
+  }
+);
+
+export const selectFunctionParametersIds = createSelector(
+  selectFunctionSignatures,
+  signatures => {
+    if (!Array.isArray(signatures)) {
+      return null;
+    }
+
+    return signatures.reduce((acc, { parameters = [] }) => {
+      const parametersIds = parameters.reduce(
+        (paraAcc, { type: { types = [] } }) => {
+          const typesIds = types.reduce((ac, cu) => {
+            if (cu.id) {
+              return [...ac, cu.id];
+            }
+
+            return ac;
+          }, []);
+
+          if (!!typesIds.length) {
+            return [...paraAcc, ...typesIds];
+          }
+
+          return paraAcc;
+        },
+        []
+      );
+
+      if (!!parametersIds.length) {
+        return [...acc, ...parametersIds];
+      }
+
+      return acc;
+    }, []);
+  }
+);
+
 export const selectTypeArgumentsIds = createSelector(
   selectExtendedTypes,
   extendedTypes => {
@@ -86,8 +135,24 @@ export const selectTypeArgumentsIds = createSelector(
   }
 );
 
-export const selectInterfaceReflection = createSelector(
+export const selectInterfaceIds = createSelector(
+  selectFunctionParametersIds,
   selectTypeArgumentsIds,
+  (functionParametersIds, typeArgumentsIds) => {
+    const ids: number[] = []
+      .concat(functionParametersIds as [], typeArgumentsIds as [])
+      .filter(Number);
+
+    if (!ids.length) {
+      return null;
+    }
+
+    return ids;
+  }
+);
+
+export const selectInterfaceReflection = createSelector(
+  selectInterfaceIds,
   selectReflectionChildren,
   (ids, reflectionChildren) => {
     if (!Array.isArray(ids) || !ids.length || !reflectionChildren) {
