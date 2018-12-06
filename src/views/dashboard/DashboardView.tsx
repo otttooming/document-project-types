@@ -1,8 +1,10 @@
 import * as React from "react";
 import { TypeObject } from "typedoc/dist/lib/serialization/browser";
 import { ProjectReflectionLvl2 } from "src/common/projectReflection";
-import { Button } from "antd";
+import { Icon } from "antd";
 import Reflection from "../../components/Reflection/Reflection";
+import { GitHubConfig } from "../../common/config/configReducer";
+import { getGitHubURL } from "../../common/config/configHelpers";
 
 export interface StateProps {
   activeComponentName: string | null;
@@ -10,6 +12,7 @@ export interface StateProps {
   extendedTypes: TypeObject[] | null;
   typeArgumentsIds: number[] | null;
   interfaceReflection: ProjectReflectionLvl2[] | null;
+  gitHubConfig: GitHubConfig | null;
 }
 
 export interface DispatchProps {
@@ -40,17 +43,27 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
   }
 
   render() {
-    const { interfaceReflection, activeComponent } = this.props;
+    const { interfaceReflection, activeComponent, gitHubConfig } = this.props;
 
     if (!activeComponent) {
       return null;
     }
 
-    const { name } = activeComponent;
+    const { name, sources } = activeComponent;
 
     return (
       <>
-        <h1 style={{ marginBottom: 32, fontSize: "2em" }}>{name}</h1>
+        <div style={{ marginBottom: 32 }}>
+          <h1 style={{ fontSize: "2em" }}>{name}</h1>
+          {sources.map(({ fileName }, key) => (
+            <p key={key}>
+              <a href={getGitHubURL(fileName, gitHubConfig)} target="_blank">
+                <Icon type="github" /> View source on GitHub
+              </a>
+            </p>
+          ))}
+        </div>
+
         {Array.isArray(interfaceReflection) &&
           interfaceReflection.map((item, index) => (
             <Reflection key={index} reflection={item} />

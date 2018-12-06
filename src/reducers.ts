@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 import projectReducer, { ProjectState } from "./common/project/projectReducer";
+import configReducer, { ConfigState } from "./common/config/configReducer";
 import routingReducer, { RoutingState } from "./common/routing/routingReducer";
 import dashboardReducer, {
   DashboardState,
@@ -11,6 +12,7 @@ import searchReducer, { SearchState } from "./views/search/searchReducer";
 
 const rootReducer = combineReducers({
   projectReducer,
+  configReducer,
   routingReducer,
   dashboardReducer,
   sidebarReducer,
@@ -19,6 +21,7 @@ const rootReducer = combineReducers({
 
 export interface GlobalState {
   projectReducer: ProjectState;
+  configReducer: ConfigState;
   routingReducer: RoutingState;
   dashboardReducer: DashboardState;
   sidebarReducer: SidebarState;

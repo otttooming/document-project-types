@@ -9,6 +9,7 @@ import {
   selectInterfaceReflection,
   selectActiveComponent,
 } from "../../common/project/projectSelectors";
+import { getGitHubConfig as selectGitHubConfig } from "../../common/config/configSelectors";
 
 const mapStateToProps = (state: GlobalState): StateProps => {
   return {
@@ -17,6 +18,7 @@ const mapStateToProps = (state: GlobalState): StateProps => {
     extendedTypes: selectExtendedTypes(state),
     typeArgumentsIds: selectTypeArgumentsIds(state),
     interfaceReflection: selectInterfaceReflection(state),
+    gitHubConfig: selectGitHubConfig(state),
   };
 };
 
