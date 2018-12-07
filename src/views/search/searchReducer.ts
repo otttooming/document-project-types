@@ -7,9 +7,22 @@ export enum KindString {
   INTERFACE = "Interface",
 }
 
+/**
+ * Use to allocate special conditions as no such values exists for TypeDoc. E.g. query for all resources.
+ */
+export enum KindStringSpecial {
+  ALL = "All",
+  COMPONENTS = "Components",
+}
+
+export type KindStringPossibilities =
+  | KindString[]
+  | KindString
+  | KindStringSpecial;
+
 export interface SearchQuery {
   name?: string;
-  kindString?: KindString[] | undefined;
+  kindString?: KindStringPossibilities | undefined;
 }
 
 class State {

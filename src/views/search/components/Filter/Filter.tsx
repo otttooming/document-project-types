@@ -1,8 +1,16 @@
 import * as React from "react";
-import { Input, Divider, Checkbox } from "antd";
+import { Input, Radio } from "antd";
 
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
-import { SearchQuery, KindString } from "../../searchReducer";
+import {
+  SearchQuery,
+  KindString,
+  KindStringSpecial,
+  KindStringPossibilities,
+} from "../../searchReducer";
+
+const RadioGroup = Radio.Group;
+const RadioButton = Radio.Button;
 
 export interface StateProps {
   searchQuery: SearchQuery | null;
@@ -40,14 +48,12 @@ class Filter extends React.Component<FilterProps, InternalState> {
     this.handleQuery(query);
   };
 
-  handleFilterRestriction = (kind: KindString[]) => (
-    event: CheckboxChangeEvent
-  ) => {
+  handleFilterRestriction = (event: CheckboxChangeEvent) => {
     const {
-      target: { checked },
+      target: { value },
     } = event;
 
-    const kindString: KindString[] | undefined = checked ? kind : undefined;
+    const kindString: KindStringPossibilities | undefined = value;
 
     const query: SearchQuery = { kindString };
 
@@ -55,6 +61,14 @@ class Filter extends React.Component<FilterProps, InternalState> {
   };
 
   render() {
+    const { searchQuery } = this.props;
+
+    const kindFilter: string[] = [
+      KindStringSpecial.ALL,
+      KindStringSpecial.COMPONENTS,
+      KindString.INTERFACE,
+    ];
+
     return (
       <>
         <Input.Search
@@ -63,19 +77,21 @@ class Filter extends React.Component<FilterProps, InternalState> {
         />
 
         <div style={{ marginBottom: 32 }}>
-          <Checkbox
-            onChange={this.handleFilterRestriction([
-              KindString.CLASS,
-              KindString.FUNCTION,
-            ])}
+          <RadioGroup
+            buttonStyle="solid"
+            onChange={this.handleFilterRestriction}
+            value={
+              !searchQuery || !searchQuery.kindString
+                ? KindStringSpecial.ALL
+                : searchQuery.kindString
+            }
           >
-            Components
-          </Checkbox>
-          <Checkbox
-            onChange={this.handleFilterRestriction([KindString.INTERFACE])}
-          >
-            Interfaces
-          </Checkbox>
+            {kindFilter.map((kind, index) => (
+              <RadioButton key={index} value={kind}>
+                {kind}
+              </RadioButton>
+            ))}
+          </RadioGroup>
         </div>
       </>
     );
