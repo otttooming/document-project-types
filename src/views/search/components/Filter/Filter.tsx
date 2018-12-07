@@ -1,6 +1,8 @@
 import * as React from "react";
-import { Input } from "antd";
-import { SearchQuery } from "../../searchReducer";
+import { Input, Divider, Checkbox } from "antd";
+
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { SearchQuery, KindString } from "../../searchReducer";
 
 export interface StateProps {
   searchQuery: SearchQuery | null;
@@ -15,14 +17,17 @@ export type FilterProps = StateProps & DispatchProps;
 interface InternalState {}
 
 class Filter extends React.Component<FilterProps, InternalState> {
-  handleQuery = (name: string): void => {
-    const { findReflection } = this.props;
+  handleQuery = (query: SearchQuery): void => {
+    if (!query) {
+      return;
+    }
 
-    const query: SearchQuery = {
-      name,
-    };
+    const { findReflection, searchQuery } = this.props;
 
-    findReflection(query);
+    const oldQuery: SearchQuery = !searchQuery ? {} : searchQuery;
+    const newQuery: SearchQuery = { ...oldQuery, ...query };
+
+    findReflection(newQuery);
   };
 
   handleOnChange = (event: React.SyntheticEvent<HTMLInputElement>): void => {
@@ -30,14 +35,49 @@ class Filter extends React.Component<FilterProps, InternalState> {
       currentTarget: { value },
     } = event;
 
-    this.handleQuery(value);
+    const query: SearchQuery = { name: value };
+
+    this.handleQuery(query);
+  };
+
+  handleFilterRestriction = (kind: KindString[]) => (
+    event: CheckboxChangeEvent
+  ) => {
+    const {
+      target: { checked },
+    } = event;
+
+    const kindString: KindString[] | undefined = checked ? kind : undefined;
+
+    const query: SearchQuery = { kindString };
+
+    this.handleQuery(query);
   };
 
   render() {
     return (
-      <div>
-        <Input.Search onChange={this.handleOnChange} />
-      </div>
+      <>
+        <Input.Search
+          onChange={this.handleOnChange}
+          style={{ marginBottom: 16 }}
+        />
+
+        <div style={{ marginBottom: 32 }}>
+          <Checkbox
+            onChange={this.handleFilterRestriction([
+              KindString.CLASS,
+              KindString.FUNCTION,
+            ])}
+          >
+            Components
+          </Checkbox>
+          <Checkbox
+            onChange={this.handleFilterRestriction([KindString.INTERFACE])}
+          >
+            Interfaces
+          </Checkbox>
+        </div>
+      </>
     );
   }
 }

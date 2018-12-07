@@ -1,6 +1,7 @@
 import { GlobalState } from "../../reducers";
 import { createSelector } from "reselect";
 import { selectReflectionChildren } from "../../common/project/projectSelectors";
+import { filterKindString, filterName } from "./searchHelpers";
 
 export const selectSearchQuery = (state: GlobalState) =>
   state.searchReducer.searchQuery;
@@ -13,16 +14,12 @@ export const selectFoundReflections = createSelector(
       return null;
     }
 
-    return reflectionChildren.reduce((acc, cur) => {
-      if (
-        cur.name.toLowerCase().includes(query.name.toLowerCase()) &&
-        query.name.length !== 0
-      ) {
-        return [...acc, cur.id];
-      }
+    const { name, kindString } = query;
 
-      return acc;
-    }, []);
+    return reflectionChildren
+      .filter(filterName(name))
+      .filter(filterKindString(kindString))
+      .map(child => child.id);
   }
 );
 

@@ -1,8 +1,15 @@
 import { handleActions, Action } from "redux-actions";
 import { findReflectionRequest } from "./searchActions";
 
+export enum KindString {
+  CLASS = "Class",
+  FUNCTION = "Function",
+  INTERFACE = "Interface",
+}
+
 export interface SearchQuery {
-  name: string;
+  name?: string;
+  kindString?: KindString[] | undefined;
 }
 
 class State {
