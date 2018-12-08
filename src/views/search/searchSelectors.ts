@@ -37,7 +37,7 @@ export const selectActiveReflectionList = createSelector(
         return acc;
       }
 
-      return [...acc, f];
-    }, []);
+      return [...(acc || []), f];
+    }, null);
   }
 );
