@@ -1,8 +1,7 @@
 import * as React from "react";
-import { List } from "antd";
 import { ProjectReflectionLvl2 } from "../../common/projectReflection";
-import { ViewName } from "../../common/routing/routingReducer";
 import Filter from "./components/Filter/filterWrapper";
+import Results from "./components/Results/resultsWrapper";
 
 export interface StateProps {
   foundReflections: number[] | null;
@@ -19,43 +18,12 @@ export type SearchViewProps = StateProps & DispatchProps;
 interface InternalState {}
 
 class SearchView extends React.Component<SearchViewProps, InternalState> {
-  handleOnTitleClick = (name: string) => (
-    event: React.SyntheticEvent<HTMLAnchorElement>
-  ) => {
-    const { setActiveComponentName, setActiveView } = this.props;
-
-    event.preventDefault();
-    setActiveComponentName(name);
-    setActiveView(ViewName.Dashboard);
-  };
-
-  renderTitle = ({ name }: ProjectReflectionLvl2) => {
-    return (
-      <a href="#" onClick={this.handleOnTitleClick(name)}>
-        {name}
-      </a>
-    );
-  };
-
   render() {
-    const { activeReflections } = this.props;
-
     return (
       <div>
         <Filter />
 
-        <List
-          itemLayout="horizontal"
-          dataSource={!activeReflections ? [] : activeReflections}
-          renderItem={(item: ProjectReflectionLvl2) => (
-            <List.Item>
-              <List.Item.Meta
-                title={this.renderTitle(item)}
-                description={item.kindString}
-              />
-            </List.Item>
-          )}
-        />
+        <Results />
       </div>
     );
   }
