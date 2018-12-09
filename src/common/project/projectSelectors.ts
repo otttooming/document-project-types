@@ -196,3 +196,45 @@ export const selectInterfaceReflection = createSelector(
     }, []);
   }
 );
+
+/**
+ * Find React Component State ID
+ */
+export const selectStateId = createSelector(
+  selectActiveComponent,
+  comp => {
+    if (!comp) {
+      return null;
+    }
+
+    const child = comp.children.find(item => item.name === "state");
+
+    /**
+     * Naïve implementation for getting the React Component State ID. Futher research needed if more applicable case available.
+     */
+    const id = !child ? null : child.type!.typeArguments![0].id!;
+
+    return id;
+  }
+);
+
+/**
+ * Find React Component Props ID
+ */
+export const selectPropsId = createSelector(
+  selectActiveComponent,
+  comp => {
+    if (!comp) {
+      return null;
+    }
+
+    const child = comp.children.find(item => item.name === "props");
+
+    /**
+     * Naïve implementation for getting the React Component Props ID. Futher research needed if more applicable case available.
+     */
+    const id = !child ? null : child.type!.types![1].typeArguments![0].id!;
+
+    return id;
+  }
+);

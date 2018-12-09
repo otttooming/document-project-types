@@ -8,6 +8,8 @@ import {
   selectTypeArgumentsIds,
   selectInterfaceReflection,
   selectActiveComponent,
+  selectStateId,
+  selectPropsId,
 } from "../../common/project/projectSelectors";
 import { getGitHubConfig as selectGitHubConfig } from "../../common/config/configSelectors";
 
@@ -19,6 +21,8 @@ const mapStateToProps = (state: GlobalState): StateProps => {
     typeArgumentsIds: selectTypeArgumentsIds(state),
     interfaceReflection: selectInterfaceReflection(state),
     gitHubConfig: selectGitHubConfig(state),
+    stateId: selectStateId(state),
+    propsId: selectPropsId(state),
   };
 };
 

@@ -13,6 +13,8 @@ export interface StateProps {
   typeArgumentsIds: number[] | null;
   interfaceReflection: ProjectReflectionLvl2[] | null;
   gitHubConfig: GitHubConfig | null;
+  stateId: number | null;
+  propsId: number | null;
 }
 
 export interface DispatchProps {
