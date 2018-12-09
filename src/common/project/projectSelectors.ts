@@ -203,7 +203,7 @@ export const selectInterfaceReflection = createSelector(
 export const selectStateId = createSelector(
   selectActiveComponent,
   comp => {
-    if (!comp) {
+    if (!comp || !Array.isArray(comp.children)) {
       return null;
     }
 
@@ -224,7 +224,7 @@ export const selectStateId = createSelector(
 export const selectPropsId = createSelector(
   selectActiveComponent,
   comp => {
-    if (!comp) {
+    if (!comp || !Array.isArray(comp.children)) {
       return null;
     }
 
