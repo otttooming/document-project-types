@@ -238,3 +238,21 @@ export const selectPropsId = createSelector(
     return id;
   }
 );
+
+/**
+ * Find React Component defaultProps ID
+ */
+export const selectDefaultPropsId = createSelector(
+  selectActiveComponent,
+  comp => {
+    if (!comp || !Array.isArray(comp.children)) {
+      return null;
+    }
+
+    const child = comp.children.find(item => item.name === "defaultProps");
+
+    const id: number | null = !child ? null : child.id;
+
+    return id;
+  }
+);
