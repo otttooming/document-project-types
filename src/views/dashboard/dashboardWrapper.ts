@@ -10,6 +10,7 @@ import {
   selectActiveComponent,
   selectStateId,
   selectPropsId,
+  selectDefaultPropsChildren,
 } from "../../common/project/projectSelectors";
 import { getGitHubConfig as selectGitHubConfig } from "../../common/config/configSelectors";
 
@@ -23,6 +24,7 @@ const mapStateToProps = (state: GlobalState): StateProps => {
     gitHubConfig: selectGitHubConfig(state),
     stateId: selectStateId(state),
     propsId: selectPropsId(state),
+    defaultProps: selectDefaultPropsChildren(state),
   };
 };
 

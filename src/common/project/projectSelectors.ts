@@ -256,3 +256,36 @@ export const selectDefaultPropsId = createSelector(
     return id;
   }
 );
+
+/**
+ * Find React Component defaultProps reflection
+ */
+export const selectDefaultProps = createSelector(
+  selectActiveComponent,
+  selectDefaultPropsId,
+  (comp, id) => {
+    if (!comp || !Array.isArray(comp.children) || !id) {
+      return null;
+    }
+
+    const reflection = comp.children.find(item => item.id === id);
+
+    return !reflection ? null : reflection;
+  }
+);
+
+/**
+ * Find React Component defaultProps reflection children
+ */
+export const selectDefaultPropsChildren = createSelector(
+  selectDefaultProps,
+  defaultProps => {
+    if (!defaultProps) {
+      return null;
+    }
+
+    const children = defaultProps.children;
+
+    return !Array.isArray(children) ? null : children;
+  }
+);

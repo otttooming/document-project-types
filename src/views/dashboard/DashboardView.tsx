@@ -1,6 +1,6 @@
 import * as React from "react";
 import { TypeObject } from "typedoc/dist/lib/serialization/browser";
-import { ProjectReflectionLvl2 } from "src/common/projectReflection";
+import { ProjectReflectionLvl2, ProjectReflectionLvl4 } from "src/common/projectReflection";
 import { Icon } from "antd";
 import Reflection from "../../components/Reflection/Reflection";
 import { GitHubConfig } from "../../common/config/configReducer";
@@ -15,6 +15,7 @@ export interface StateProps {
   gitHubConfig: GitHubConfig | null;
   stateId: number | null;
   propsId: number | null;
+  defaultProps:  ProjectReflectionLvl4[] | null;
 }
 
 export interface DispatchProps {
@@ -45,7 +46,7 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
   }
 
   render() {
-    const { interfaceReflection, activeComponent, gitHubConfig } = this.props;
+    const { interfaceReflection, activeComponent, gitHubConfig, defaultProps, propsId } = this.props;
 
     if (!activeComponent) {
       return null;
@@ -68,7 +69,7 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
 
         {Array.isArray(interfaceReflection) &&
           interfaceReflection.map((item, index) => (
-            <Reflection key={index} reflection={item} />
+            <Reflection key={index} reflection={item} defaulProps={defaultProps} propsId={propsId} />
           ))}
       </>
     );

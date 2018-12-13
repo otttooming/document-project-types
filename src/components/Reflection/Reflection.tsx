@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   ProjectReflectionLvl2,
   ProjectReflectionLvl3,
+  ProjectReflectionLvl4,
 } from "src/common/projectReflection";
 import { Table, Tag, Divider, Icon } from "antd";
 import {
@@ -16,6 +17,8 @@ const { Column } = Table;
 
 export interface ReflectionProps {
   reflection: ProjectReflectionLvl2;
+  defaulProps: ProjectReflectionLvl4[] | null;
+  propsId: number | null;
 }
 
 export interface ReflectionState {}
@@ -90,6 +93,42 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
     return type.name;
   };
 
+  getIsProps = (id: number): boolean => {
+    const { propsId } = this.props;
+
+    return id === propsId;
+  };
+
+  getIsDefinedInDefaultProps = (name: string): boolean => {
+    const { defaulProps } = this.props;
+
+    if (!Array.isArray(defaulProps)) {
+      return false;
+    }
+
+    const isNameMatchedInDefaultProps: boolean = !!defaulProps.find(
+      item => item.name === name
+    );
+
+    return isNameMatchedInDefaultProps;
+  };
+
+  /**
+   * isOptional may be defined specifically or matched with defaultProps.
+   * If defined in defaultProps we set the prop to optional.
+   */
+  getIsOptional = (name: string, isOptional: boolean): boolean => {
+    const {
+      reflection: { id },
+    } = this.props;
+
+    if (this.getIsProps(id) && this.getIsDefinedInDefaultProps(name)) {
+      return true;
+    }
+
+    return isOptional;
+  };
+
   render() {
     const {
       reflection: { children, name, kindString },
@@ -135,7 +174,7 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
             dataIndex="tag"
             key="tag"
             render={({ name, flags }) => {
-              if (flags.isOptional) {
+              if (this.getIsOptional(name, flags.isOptional)) {
                 return (
                   <CopyToClipboard text={name}>
                     <Tag>
