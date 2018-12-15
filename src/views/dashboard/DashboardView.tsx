@@ -4,7 +4,7 @@ import {
   ProjectReflectionLvl2,
   ProjectReflectionLvl4,
 } from "src/common/projectReflection";
-import { Icon } from "antd";
+import { Icon, Alert } from "antd";
 import Reflection from "../../components/Reflection/Reflection";
 import { GitHubConfig } from "../../common/config/configReducer";
 import { getGitHubURL } from "../../common/config/configHelpers";
@@ -58,7 +58,14 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
     } = this.props;
 
     if (!activeComponent) {
-      return null;
+      return (
+        <Alert
+          message="Type definitions"
+          description="When you pass an name or search for type definitions this will populate here."
+          type="info"
+          showIcon
+        />
+      );
     }
 
     const { name, sources } = activeComponent;

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ProjectReflectionLvl2 } from "src/common/projectReflection";
-import { Table } from "antd";
+import { Table, Alert } from "antd";
 
 import { ViewName } from "../../../../common/routing/routingReducer";
 
@@ -36,7 +36,14 @@ class Results extends React.Component<ResultsProps, InternalState> {
     const { activeReflections } = this.props;
 
     if (!activeReflections) {
-      return null;
+      return (
+        <Alert
+          message="Search for type definitions"
+          description="Here will be a list of found type definitons."
+          type="info"
+          showIcon
+        />
+      );
     }
 
     const data = activeReflections.map((item, index) => {
