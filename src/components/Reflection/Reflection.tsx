@@ -161,8 +161,8 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
           extends
         </code>
 
-        {extendedTypes.map(({ name }) => (
-          <code>{name}</code>
+        {extendedTypes.map(({ name }, index) => (
+          <code key={index}>{name}</code>
         ))}
       </>
     );
