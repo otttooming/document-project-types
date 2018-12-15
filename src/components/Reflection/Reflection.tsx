@@ -129,6 +129,45 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
     return isOptional;
   };
 
+  renderExtendsInterface = () => {
+    const {
+      reflection: { extendedTypes },
+    } = this.props;
+
+    if (!Array.isArray(extendedTypes)) {
+      return null;
+    }
+
+    const isPartialExtended: boolean =
+      extendedTypes.length === 1 &&
+      !!extendedTypes.find(
+        ({ declaration }) =>
+          !!declaration && declaration.kindString === "Type literal"
+      );
+
+    if (isPartialExtended) {
+      return null;
+    }
+
+    return (
+      <>
+        <code
+          style={{
+            fontSize: 12,
+            display: "inline-block",
+            margin: "0 16px 0",
+          }}
+        >
+          extends
+        </code>
+
+        {extendedTypes.map(({ name }) => (
+          <code>{name}</code>
+        ))}
+      </>
+    );
+  };
+
   render() {
     const {
       reflection: { children, name, kindString },
@@ -151,16 +190,25 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
 
     return (
       <div>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            flexWrap: "wrap",
+            marginBottom: 8,
+          }}
+        >
           <h2>
             <code>{name}</code>
           </h2>
 
-          <Divider type="vertical" />
+          <p>{this.renderExtendsInterface()}</p>
 
-          <p>
-            <code style={{ fontSize: 12 }}> | {kindString}</code>
-          </p>
+          <div style={{ width: "100%" }}>
+            <Tag>
+              <code>{kindString}</code>
+            </Tag>
+          </div>
         </div>
 
         <Table
