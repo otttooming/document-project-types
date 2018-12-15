@@ -32,10 +32,14 @@ class SidebarView extends React.Component<SidebarViewProps, InternalState> {
   };
 
   renderTabTitle = (title: string, icon?: string) => {
+    if (!icon) {
+      return title;
+    }
+
     return (
-      <div style={{ width: 100, overflow: "hidden", textOverflow: "ellipsis" }}>
-        {icon && <Icon type={icon} />} {title}
-      </div>
+      <>
+        <Icon type={icon} /> {title}
+      </>
     );
   };
 
@@ -44,11 +48,7 @@ class SidebarView extends React.Component<SidebarViewProps, InternalState> {
 
     return (
       <Container>
-        <Tabs
-          activeKey={activeView}
-          tabPosition="left"
-          onChange={this.handelOnChange}
-        >
+        <Tabs activeKey={activeView} onChange={this.handelOnChange}>
           <TabPane tab={this.renderTabTitle("Types")} key={ViewName.Dashboard}>
             {VIEW[ViewName.Dashboard]}
           </TabPane>
