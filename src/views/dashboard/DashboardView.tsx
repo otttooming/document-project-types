@@ -27,25 +27,11 @@ export interface DispatchProps {
 
 export type DashboardViewProps = StateProps & DispatchProps;
 
-interface InternalState {
-  isUploadShowing: boolean;
-  selectedPerson: string | null;
-  showAllPersons: boolean;
-  csv: File | null;
-}
+interface InternalState {}
 
 class DashboardView extends React.Component<DashboardViewProps, InternalState> {
-  private pageSize: number = 20;
-
   constructor(props: DashboardViewProps) {
     super(props);
-
-    this.state = {
-      isUploadShowing: false,
-      selectedPerson: null,
-      showAllPersons: false,
-      csv: null,
-    };
   }
 
   render() {
