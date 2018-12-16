@@ -29,7 +29,11 @@ export const selectActiveComponent = createSelector(
   getActiveComponentName,
   getReflection,
   (activeComponentName, reflection) => {
-    const foundActiveComponent = reflection!.children.find(
+    if (!reflection) {
+      return null;
+    }
+
+    const foundActiveComponent = reflection.children.find(
       item => item.name === activeComponentName
     );
 
