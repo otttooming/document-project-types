@@ -3,13 +3,18 @@ import { Provider } from "react-redux";
 import configureStore from "./store";
 import { ThemeProvider } from "./common/styled";
 import { theme } from "./common/styled/theme";
-import { specs } from "./common/specs";
 import SidebarView from "./views/sidebar/sidebarWrapper";
+import { GitHubConfig } from "./common/config/configReducer";
+import { ProjectReflection } from "./common/projectReflection";
 
-export interface AppProps {}
+export interface AppProps {
+  reflection?: ProjectReflection;
+  git?: GitHubConfig;
+}
 
-const App: React.SFC<AppProps> = () => {
-  const rootStore = configureStore(specs);
+const App: React.SFC<AppProps> = props => {
+  const { reflection, git } = props;
+  const rootStore = configureStore(reflection, git);
 
   return (
     <Provider store={rootStore.store}>
