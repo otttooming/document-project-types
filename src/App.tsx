@@ -1,6 +1,4 @@
 import * as React from "react";
-import DashboardView from "./views/dashboard/dashboardWrapper";
-import { reset } from "./common/styled/reset";
 import { Provider } from "react-redux";
 import configureStore from "./store";
 import { ThemeProvider } from "./common/styled";
