@@ -151,6 +151,14 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
     return matchedDefaultProps.defaultValue;
   };
 
+  getComment = (item: ProjectReflectionLvl3) => {
+    if (!item.comment) {
+      return undefined;
+    }
+
+    return item.comment.shortText;
+  };
+
   renderExtendsInterface = () => {
     const {
       reflection: { extendedTypes },
@@ -201,13 +209,14 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
 
     const data = children.map((item, index) => {
       const { name, flags } = item;
-      const typeDefinition = this.getType(item);
+      const type = this.getType(item);
       const defaultValue = this.getDefaultValue(item);
+      const comment = this.getComment(item);
 
       return {
         key: index,
         tag: { name, flags },
-        type: typeDefinition,
+        desc: { type, comment },
         defaultValue,
       };
     });
@@ -268,10 +277,20 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
           />
           <Column
             title="Description"
-            dataIndex="type"
-            key="type"
-            render={description => (
-              <code style={{ fontSize: 12 }}>{description}</code>
+            dataIndex="desc"
+            key="desc"
+            render={({ type, comment }) => (
+              <>
+                <div>
+                  <code style={{ fontSize: 12 }}>{type}</code>
+                </div>
+                {!!comment && (
+                  <>
+                    <Divider />
+                    <code style={{ fontSize: 12 }}>{comment}</code>
+                  </>
+                )}
+              </>
             )}
           />
           <Column

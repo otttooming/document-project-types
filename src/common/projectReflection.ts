@@ -8,6 +8,8 @@ import {
   SourceReferenceObject,
   TypeContainer,
   ContainerReflectionContainer,
+  CommentContainer,
+  CommentObject,
 } from "typedoc/dist/lib/serialization/browser";
 
 export interface ProjectReflectionLvl4
@@ -20,7 +22,8 @@ export interface ProjectReflectionLvl3
   extends ReflectionContainer,
     Partial<GroupsContainer<ReflectionGroupObject>>,
     SourceReferenceContainer<SourceReferenceObject>,
-    Partial<TypeContainer> {
+    Partial<TypeContainer>,
+    Partial<CommentContainer<CommentObject>> {
   children?: ProjectReflectionLvl4[];
 }
 
