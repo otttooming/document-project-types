@@ -129,6 +129,28 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
     return isOptional;
   };
 
+  getDefaultValue = ({ name }: ProjectReflectionLvl3) => {
+    const { defaulProps } = this.props;
+
+    if (!Array.isArray(defaulProps) || !this.getIsDefinedInDefaultProps(name)) {
+      return undefined;
+    }
+
+    const matchedDefaultProps: any = defaulProps.find(
+      item => item.name === name
+    );
+
+    if (!matchedDefaultProps) {
+      return undefined;
+    }
+
+    if (Array.isArray(matchedDefaultProps.children)) {
+      return matchedDefaultProps.children.map((item: any) => item.defaultValue);
+    }
+
+    return matchedDefaultProps.defaultValue;
+  };
+
   renderExtendsInterface = () => {
     const {
       reflection: { extendedTypes },
@@ -180,11 +202,13 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
     const data = children.map((item, index) => {
       const { name, flags } = item;
       const typeDefinition = this.getType(item);
+      const defaultValue = this.getDefaultValue(item);
 
       return {
         key: index,
         tag: { name, flags },
         type: typeDefinition,
+        defaultValue,
       };
     });
 
@@ -248,6 +272,14 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
             key="type"
             render={description => (
               <code style={{ fontSize: 12 }}>{description}</code>
+            )}
+          />
+          <Column
+            title="Default"
+            dataIndex="defaultValue"
+            key="defaultValue"
+            render={defaultValue => (
+              <code style={{ fontSize: 12 }}>{defaultValue}</code>
             )}
           />
         </Table>
