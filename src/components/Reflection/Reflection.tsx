@@ -216,8 +216,7 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
       return {
         key: index,
         tag: { name, flags },
-        desc: { type, comment },
-        defaultValue,
+        desc: { type, comment, defaultValue },
       };
     });
 
@@ -279,10 +278,18 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
             title="Description"
             dataIndex="desc"
             key="desc"
-            render={({ type, comment }) => (
+            render={({ type, comment, defaultValue }) => (
               <>
                 <div>
                   <code style={{ fontSize: 12 }}>{type}</code>
+                  {!!defaultValue && (
+                    <>
+                      <code>{" = "}</code>
+                      <Tag>
+                        <code>{defaultValue}</code>
+                      </Tag>
+                    </>
+                  )}
                 </div>
                 {!!comment && (
                   <>
@@ -291,14 +298,6 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
                   </>
                 )}
               </>
-            )}
-          />
-          <Column
-            title="Default"
-            dataIndex="defaultValue"
-            key="defaultValue"
-            render={defaultValue => (
-              <code style={{ fontSize: 12 }}>{defaultValue}</code>
             )}
           />
         </Table>
