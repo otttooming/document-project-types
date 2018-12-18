@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Input, Radio } from "antd";
+import { Input, Radio, Icon } from "antd";
 
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import {
@@ -72,6 +72,13 @@ class Filter extends React.Component<FilterProps, InternalState> {
     return (
       <>
         <Input.Search
+          enterButton={
+            <>
+              <Icon type="search" />
+              <span>Search</span>
+            </>
+          }
+          placeholder="Enter Component or type name here..."
           onChange={this.handleOnChange}
           style={{ marginBottom: 16 }}
         />
