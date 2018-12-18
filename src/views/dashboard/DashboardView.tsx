@@ -4,7 +4,7 @@ import {
   ProjectReflectionLvl2,
   ProjectReflectionLvl4,
 } from "src/common/projectReflection";
-import { Icon, Alert } from "antd";
+import { Icon, Alert, Divider } from "antd";
 import Reflection from "../../components/Reflection/Reflection";
 import { GitHubConfig } from "../../common/config/configReducer";
 import { getGitHubURL } from "../../common/config/configHelpers";
@@ -58,7 +58,7 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
 
     return (
       <>
-        <div style={{ marginBottom: 32 }}>
+        <div style={{ marginBottom: 24 }}>
           <h1 style={{ fontSize: "2em" }}>{name}</h1>
           {sources.map(({ fileName }, key) => (
             <p key={key}>
@@ -68,6 +68,8 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
             </p>
           ))}
         </div>
+
+        <Divider />
 
         {Array.isArray(interfaceReflection) &&
           interfaceReflection.map((item, index) => (
