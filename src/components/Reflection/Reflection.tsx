@@ -227,7 +227,6 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
             display: "flex",
             alignItems: "baseline",
             flexWrap: "wrap",
-            marginBottom: 8,
           }}
         >
           <h2>
@@ -235,12 +234,6 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
           </h2>
 
           <p>{this.renderExtendsInterface()}</p>
-
-          <div style={{ width: "100%" }}>
-            <Tag>
-              <code>{kindString}</code>
-            </Tag>
-          </div>
         </div>
 
         <Table
@@ -248,6 +241,7 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
           pagination={false}
           style={{ marginBottom: 32 }}
           size="middle"
+          bordered={true}
         >
           <Column
             title="Props"
@@ -284,9 +278,9 @@ class Reflection extends React.Component<ReflectionProps, ReflectionState> {
                   <code style={{ fontSize: 12 }}>{type}</code>
                   {!!defaultValue && (
                     <>
-                      <code>{" = "}</code>
+                      <code style={{ fontSize: 12 }}>{" = "}</code>
                       <Tag>
-                        <code>{defaultValue}</code>
+                        <code style={{ fontSize: 12 }}>{defaultValue}</code>
                       </Tag>
                     </>
                   )}
