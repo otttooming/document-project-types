@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ProjectReflectionLvl2 } from "src/common/projectReflection";
-import { Table, Alert } from "antd";
+import { Table, Alert, Divider } from "antd";
 
 import { ViewName } from "../../../../common/routing/routingReducer";
 
@@ -58,11 +58,16 @@ class Results extends React.Component<ResultsProps, InternalState> {
 
     return (
       <>
+        <Divider />
+
+        <h2>Results</h2>
+
         <Table
           dataSource={data}
           pagination={false}
           style={{ marginBottom: 32 }}
           size="middle"
+          bordered={true}
         >
           <Column
             title="Props"
