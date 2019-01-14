@@ -12,7 +12,8 @@
     "dev": "NODE_ENV=development webpack-dev-server --host 0.0.0.0 --port 4000 --mode development",
     "build": "NODE_ENV=production webpack",
     "clean": "rimraf dist",
-    "dist": "npm run clean && npm run build"
+    "dist": "npm run clean && npm run build",
+    "release": "release-it"
   },
   "dependencies": {
     "antd": "3.10.9",
@@ -53,6 +54,7 @@
     "babel-loader": "8.0.4",
     "babel-plugin-import": "1.11.0",
     "css-loader": "2.0.1",
+    "release-it": "^9.8.1",
     "rimraf": "2.6.2",
     "style-loader": "0.23.1",
     "typedoc": "0.13.0",
