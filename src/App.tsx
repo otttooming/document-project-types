@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Store } from "redux";
 import { Provider } from "react-redux";
 import configureStore from "./store";
 import { ThemeProvider, GlobalStyles } from "./common/styled";
@@ -13,20 +14,29 @@ export interface AppProps {
   activeComponentName?: string;
 }
 
-const App: React.SFC<AppProps> = props => {
-  const { reflection, git, activeComponentName } = props;
-  const rootStore = configureStore(reflection, git, activeComponentName);
+class App extends React.PureComponent<AppProps, any> {
+  store: Store;
 
-  return (
-    <Provider store={rootStore.store}>
-      <ThemeProvider theme={theme}>
-        <>
-          <SidebarView />
-          <GlobalStyles />
-        </>
-      </ThemeProvider>
-    </Provider>
-  );
-};
+  constructor(props: AppProps) {
+    super(props);
+
+    const { reflection, git, activeComponentName } = props;
+
+    this.store = configureStore(reflection, git, activeComponentName);
+  }
+
+  render() {
+    return (
+      <Provider store={this.store}>
+        <ThemeProvider theme={theme}>
+          <>
+            <SidebarView />
+            <GlobalStyles />
+          </>
+        </ThemeProvider>
+      </Provider>
+    );
+  }
+}
 
 export default App;

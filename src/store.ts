@@ -21,5 +21,5 @@ export default function configureStore(
     composeEnhancer(applyMiddleware(thunk))
   );
 
-  return { store };
+  return store;
 }
