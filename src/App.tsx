@@ -10,11 +10,12 @@ import { ProjectReflection } from "./common/projectReflection";
 export interface AppProps {
   reflection?: ProjectReflection;
   git?: GitHubConfig;
+  activeComponentName?: string;
 }
 
 const App: React.SFC<AppProps> = props => {
-  const { reflection, git } = props;
-  const rootStore = configureStore(reflection, git);
+  const { reflection, git, activeComponentName } = props;
+  const rootStore = configureStore(reflection, git, activeComponentName);
 
   return (
     <Provider store={rootStore.store}>
