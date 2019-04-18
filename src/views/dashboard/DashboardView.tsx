@@ -4,10 +4,8 @@ import {
   ProjectReflectionLvl2,
   ProjectReflectionLvl4,
 } from "src/common/projectReflection";
-import { Icon, Alert, Divider } from "antd";
+import { Alert, Divider } from "antd";
 import Reflection from "../../components/Reflection/Reflection";
-import { GitHubConfig } from "../../common/config/configReducer";
-import { getGitHubURL } from "../../common/config/configHelpers";
 
 export interface StateProps {
   activeComponentName: string | null;
@@ -15,7 +13,6 @@ export interface StateProps {
   extendedTypes: TypeObject[] | null;
   typeArgumentsIds: number[] | null;
   interfaceReflection: ProjectReflectionLvl2[] | null;
-  gitHubConfig: GitHubConfig | null;
   stateId: number | null;
   propsId: number | null;
   defaultProps: ProjectReflectionLvl4[] | null;
@@ -38,7 +35,6 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
     const {
       interfaceReflection,
       activeComponent,
-      gitHubConfig,
       defaultProps,
       propsId,
     } = this.props;
@@ -54,19 +50,12 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
       );
     }
 
-    const { name, sources } = activeComponent;
+    const { name } = activeComponent;
 
     return (
       <>
         <div style={{ marginBottom: 24 }}>
           <h1 style={{ fontSize: "2em" }}>{name}</h1>
-          {sources.map(({ fileName }, key) => (
-            <p key={key}>
-              <a href={getGitHubURL(fileName, gitHubConfig)} target="_blank">
-                <Icon type="github" /> View source on GitHub
-              </a>
-            </p>
-          ))}
         </div>
 
         <Divider />

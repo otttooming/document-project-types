@@ -9,6 +9,7 @@ const TabPane = Tabs.TabPane;
 
 export interface StateProps {
   activeView: ViewName;
+  gitHubUrl: string | null;
 }
 
 export interface DispatchProps {
@@ -25,11 +26,21 @@ const VIEW = {
 };
 
 class SidebarView extends React.Component<SidebarViewProps, InternalState> {
-  handelOnChange = (value: ViewName) => {
-    const { setActiveView } = this.props;
+  handelOnChange = (value: ViewName | string) => {
+    const { setActiveView, gitHubUrl } = this.props;
+
+    function isGitHubLink(value: ViewName | string): value is string {
+      return value === "github";
+    }
+
+    if (isGitHubLink(value)) {
+      return window.open(gitHubUrl ? gitHubUrl : undefined, "_blank");
+    }
 
     setActiveView(value);
   };
+
+  handleGitHubLink = () => {};
 
   renderTabTitle = (title: string, icon: string) => {
     return (
@@ -55,6 +66,12 @@ class SidebarView extends React.Component<SidebarViewProps, InternalState> {
           >
             {VIEW[ViewName.Dashboard]}
           </TabPane>
+
+          <TabPane
+            tab={this.renderTabTitle("View source on GitHub", "github")}
+            key="github"
+          />
+
           <TabPane
             tab={this.renderTabTitle("Search", "search")}
             key={ViewName.Search}

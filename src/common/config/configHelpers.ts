@@ -18,9 +18,9 @@ function getFileNameWithPath(fileName: string, path: string): string {
 export function getGitHubURL(
   fileName: string,
   config: GitHubConfig | null
-): string | undefined {
+): string | null {
   if (!config) {
-    return undefined;
+    return null;
   }
 
   const { user, project, hostname = "github.com", branch, path } = config;
