@@ -1,6 +1,6 @@
 import * as React from "react";
 import Container from "../../components/Container/Container";
-import { Icon, Tabs } from "antd";
+import { Icon, Tabs, Tooltip } from "antd";
 import { ViewName } from "./sidebarReducer";
 import DashboardView from "../dashboard/dashboardWrapper";
 import SearchView from "../search/searchWrapper";
@@ -31,15 +31,11 @@ class SidebarView extends React.Component<SidebarViewProps, InternalState> {
     setActiveView(value);
   };
 
-  renderTabTitle = (title: string, icon?: string) => {
-    if (!icon) {
-      return title;
-    }
-
+  renderTabTitle = (title: string, icon: string) => {
     return (
-      <>
-        <Icon type={icon} /> {title}
-      </>
+      <Tooltip placement="right" title={title}>
+        <Icon type={icon} />
+      </Tooltip>
     );
   };
 
@@ -48,8 +44,15 @@ class SidebarView extends React.Component<SidebarViewProps, InternalState> {
 
     return (
       <Container>
-        <Tabs activeKey={activeView} onChange={this.handelOnChange}>
-          <TabPane tab={this.renderTabTitle("Types")} key={ViewName.Dashboard}>
+        <Tabs
+          tabPosition="left"
+          activeKey={activeView}
+          onChange={this.handelOnChange}
+        >
+          <TabPane
+            tab={this.renderTabTitle("Types", "home")}
+            key={ViewName.Dashboard}
+          >
             {VIEW[ViewName.Dashboard]}
           </TabPane>
           <TabPane
