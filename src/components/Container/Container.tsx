@@ -33,8 +33,6 @@ const ContainerWrapper = styled.section<ContainerWrapperProps>`
 `;
 
 const ContainerContent = styled.div`
-  margin-left: auto;
-  margin-right: auto;
   padding: 32px;
   max-width: 1024px;
 `;
