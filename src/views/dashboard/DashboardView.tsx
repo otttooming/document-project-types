@@ -4,7 +4,7 @@ import {
   ProjectReflectionLvl2,
   ProjectReflectionLvl4,
 } from "src/common/projectReflection";
-import { Alert, Divider } from "antd";
+import { Alert } from "antd";
 import Reflection from "../../components/Reflection/Reflection";
 
 export interface StateProps {
@@ -50,27 +50,18 @@ class DashboardView extends React.Component<DashboardViewProps, InternalState> {
       );
     }
 
-    const { name } = activeComponent;
+    if (!Array.isArray(interfaceReflection)) {
+      return null;
+    }
 
-    return (
-      <>
-        <div style={{ marginBottom: 24 }}>
-          <h1 style={{ fontSize: "2em" }}>{name}</h1>
-        </div>
-
-        <Divider />
-
-        {Array.isArray(interfaceReflection) &&
-          interfaceReflection.map((item, index) => (
-            <Reflection
-              key={index}
-              reflection={item}
-              defaulProps={defaultProps}
-              propsId={propsId}
-            />
-          ))}
-      </>
-    );
+    return interfaceReflection.map((item, index) => (
+      <Reflection
+        key={index}
+        reflection={item}
+        defaulProps={defaultProps}
+        propsId={propsId}
+      />
+    ));
   }
 }
 
