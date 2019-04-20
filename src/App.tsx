@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Store } from "redux";
 import { Provider } from "react-redux";
+import StyledFrame from "react-styled-frame";
 import configureStore from "./store";
 import { ThemeProvider, GlobalStyles } from "./common/styled";
 import { theme } from "./common/styled/theme";
@@ -27,14 +28,14 @@ class App extends React.PureComponent<AppProps, any> {
 
   render() {
     return (
-      <Provider store={this.store}>
-        <ThemeProvider theme={theme}>
-          <>
+      <ThemeProvider theme={theme}>
+        <StyledFrame style={{ width: "100%", height: "100%" }}>
+          <Provider store={this.store}>
             <SidebarView />
             <GlobalStyles />
-          </>
-        </ThemeProvider>
-      </Provider>
+          </Provider>
+        </StyledFrame>
+      </ThemeProvider>
     );
   }
 }
